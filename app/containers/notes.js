@@ -28,11 +28,14 @@ var Notes = (function () {
     Notes.prototype.onNoteChecked = function (i) {
         this.notes.splice(i, 1);
     };
+    Notes.prototype.onCreateNote = function (note) {
+        this.notes.push(note);
+    };
     Notes = __decorate([
         core_1.Component({
             selector: 'notes-container',
             styles: ["\n    .notes {\n      padding-top: 50px;\n    }\n    .creator {\n      margin-bottom: 40px;\n    }\n  "],
-            template: "\n    <div class=\"row center-xs notes\">\n      <div class=\"col-xs-6 creator\">\n        <note-creator></note-creator>\n      </div>\n      <div class=\"notes col-xs-8\">\n        <div class=\"row between-xs\">\n          <note-card\n            class=\"col-xs-4\"\n            [note]=\"note\"\n            *ngFor=\"let note of notes; let i=index\"\n            (checked)=\"onNoteChecked(i)\"\n          >\n          </note-card>\n        </div>\n      </div>\n    </div>\n  "
+            template: "\n    <div class=\"row center-xs notes\">\n      <div class=\"col-xs-6 creator\">\n        <note-creator\n          (createNote)=\"onCreateNote($event)\">\n        </note-creator>\n      </div>\n      <div class=\"notes col-xs-8\">\n        <div class=\"row between-xs\">\n          <note-card\n            class=\"col-xs-4\"\n            [note]=\"note\"\n            *ngFor=\"let note of notes; let i=index\"\n            (checked)=\"onNoteChecked(i)\"\n          >\n          </note-card>\n        </div>\n      </div>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], Notes);
