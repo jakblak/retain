@@ -12,6 +12,7 @@ var core_1 = require('@angular/core');
 var NoteCreator = (function () {
     function NoteCreator() {
         this.createNote = new core_1.EventEmitter();
+        this.fullForm = false;
         this.newNote = {
             title: '',
             value: ''
@@ -23,12 +24,16 @@ var NoteCreator = (function () {
             this.createNote.next({ title: title, value: value });
         }
         this.reset();
+        this.toggle(false);
     };
     NoteCreator.prototype.reset = function () {
         this.newNote = {
             title: '',
             value: ''
         };
+    };
+    NoteCreator.prototype.toggle = function (value) {
+        this.fullForm = value;
     };
     __decorate([
         core_1.Output(), 
@@ -38,7 +43,7 @@ var NoteCreator = (function () {
         core_1.Component({
             selector: 'note-creator',
             styles: ["\n      .note-creator {\n      padding: 20px;\n      background-color: white;\n      border-radius: 3px;\n    }\n    .title {\n      font-weight: bold;\n      color: rgba(0,0,0,0.8);\n    }\n    .full {\n      height: 100px;\n    }\n  "],
-            template: "\n    <div class=\"note-creator shadow-2\">\n      <form class=\"row\" (submit)=\"onCreateNote()\">\n        <input\n          type=\"text\"\n          [(ngModel)]=\"newNote.title\"\n          name=\"newNoteTitle\"\n          placeholder=\"Title\"\n          class=\"col-xs-10 title\"\n        >\n        <input\n          type=\"text\"\n          [(ngModel)]=\"newNote.value\"\n          name=\"newNoteValue\"\n          placeholder=\"Take a note...\"\n          class=\"col-xs-10\"\n        >\n        <div class=\"actions col-xs-12 row between-xs\">\n          <button\n            type=\"submit\"\n            class=\"btn-light\"\n           >\n            Done\n          </button>\n        </div>\n      </form>\n    </div>\n  "
+            template: "\n    <div class=\"note-creator shadow-2\">\n      <form class=\"row\" (submit)=\"onCreateNote()\">\n        <input\n              type=\"text\"\n              [(ngModel)]=\"newNote.title\"\n              name=\"newNoteTitle\"\n              placeholder=\"Title\"\n              class=\"col-xs-10 title\"\n              *ngIf=\"fullForm\"\n        >\n        <input\n              type=\"text\"\n              (focus)=\"toggle(true)\"\n              [(ngModel)]=\"newNote.value\"\n              name=\"newNoteValue\"\n              placeholder=\"Take a note...\"\n              class=\"col-xs-10\"\n        >\n        <div class=\"actions col-xs-12 row between-xs\" *ngIf=\"fullForm\">\n          <button\n            type=\"submit\"\n            class=\"btn-light\"\n           >\n            Done\n          </button>\n        </div>\n      </form>\n    </div>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], NoteCreator);

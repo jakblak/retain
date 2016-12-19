@@ -20,20 +20,22 @@ import { Component, Output, EventEmitter } from '@angular/core';
     <div class="note-creator shadow-2">
       <form class="row" (submit)="onCreateNote()">
         <input
-          type="text"
-          [(ngModel)]="newNote.title"
-          name="newNoteTitle"
-          placeholder="Title"
-          class="col-xs-10 title"
+              type="text"
+              [(ngModel)]="newNote.title"
+              name="newNoteTitle"
+              placeholder="Title"
+              class="col-xs-10 title"
+              *ngIf="fullForm"
         >
         <input
-          type="text"
-          [(ngModel)]="newNote.value"
-          name="newNoteValue"
-          placeholder="Take a note..."
-          class="col-xs-10"
+              type="text"
+              (focus)="toggle(true)"
+              [(ngModel)]="newNote.value"
+              name="newNoteValue"
+              placeholder="Take a note..."
+              class="col-xs-10"
         >
-        <div class="actions col-xs-12 row between-xs">
+        <div class="actions col-xs-12 row between-xs" *ngIf="fullForm">
           <button
             type="submit"
             class="btn-light"
@@ -48,6 +50,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 export class NoteCreator {
   @Output() createNote = new EventEmitter();
 
+  fullForm: boolean = false;
   newNote = {
     title: '',
     value: ''
@@ -59,6 +62,7 @@ export class NoteCreator {
       this.createNote.next({title, value});
     }
     this.reset();
+    this.toggle(false);
   }
 
   reset() {
@@ -66,6 +70,10 @@ export class NoteCreator {
     title: '',
     value: ''
    }
+  }
+
+  toggle(value: boolean) {
+    this.fullForm = value;
   }
 
 }
